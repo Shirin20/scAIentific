@@ -2,7 +2,15 @@
 
 ## Overview
 
-scAIentific is an application designed to assist researchers and students with their research. By utilizing an advanced AI model, scAIentific simplifies the process of identifying key trends, themes, and findings across a vast array of scientific articles. This tool aims to make the exploration of the research frontier more efficient and accessible, thereby saving time and resources for its users.
+scAIentific is an application designed to assist researchers and students with their research. By utilizing an advanced AI model, scAIentific simplifies the process of identifying key trends, themes, and findings across a vast array of scientific articles. This tool aims to make the exploration of the research frontier more efficient and accessible, thereby saving time and resources for its users.This project represents the collaborative efforts of students as part of a university group project.
+
+## Developers
+
+This project was developed by a group of students:
+
+- **Shirin Meirkhan**
+- **[kalle Andreasson](https://github.com/kalleandreasson)**
+
 
 ### Project Origin
 
@@ -71,5 +79,3 @@ dotnet run
 ![Home-page](AppOverview/home-page.png) 
 
 ## License
-
-
