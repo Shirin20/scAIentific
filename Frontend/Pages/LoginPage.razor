@@ -1,0 +1,64 @@
+@page "/login"
+@using Frontend.Models
+@using Frontend.Services
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject SessionService SessionService
+@inject IConfiguration Configuration
+
+
+<PageTitle>Login</PageTitle>
+
+
+<div class="form-s"> 
+<EditForm Model="loginModel" OnValidSubmit="HandleLogin">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger" role="alert">
+        @errorMessage
+    </div>
+}
+    <div>
+        <label>Username:</label>
+        <InputText @bind-Value="loginModel.Username" />
+    </div>
+    <div>
+        <label>Password:</label>
+        <InputText @bind-Value="loginModel.Password" type="password" />
+    </div>
+    <button  type="submit">Login</button>
+</EditForm>
+</div>
+@code {
+    private LoginModel loginModel = new LoginModel();
+    private string errorMessage;
+    private async Task HandleLogin()
+    {
+        try
+        {
+            string apiBaseUrl = Configuration["APIBaseUrl"] ?? throw new InvalidOperationException("API base URL not configured.");
+            string registerEndpoint = $"{apiBaseUrl}auth/login";
+
+
+            var response = await Http.PostAsJsonAsync(registerEndpoint, loginModel);
+            if (response.IsSuccessStatusCode)
+            {
+                var authResponse = await response.Content.ReadFromJsonAsync<JWTTokenResponse>();
+                SessionService.SetToken(authResponse.Token); // Save JWT for session management
+                NavigationManager.NavigateTo("/");
+            }
+            else
+            {
+                errorMessage = "Login failed. Please check your username and password.";
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+            throw; // Consider handling the exception more gracefully
+        }
+    }
+}
+

@@ -1,0 +1,62 @@
+@page "/register"
+@using Frontend.Models
+@using Frontend.Services
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject IConfiguration Configuration
+
+<PageTitle>Register</PageTitle>
+<div class="form-s"> 
+<EditForm Model="newUser" OnValidSubmit="HandleRegister">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="alert alert-danger" role="alert">
+            @errorMessage
+        </div>
+    }
+
+    <div>
+        <label>Username:</label>
+        <InputText @bind-Value="newUser.Username" />
+    </div>
+    <div>
+        <label>Password:</label>
+        <InputText @bind-Value="newUser.Password" type="password" />
+    </div>
+    <div>
+        <label>Email:</label>
+        <InputText @bind-Value="newUser.Email" type="email" />
+    </div>
+    <button type="submit">Register</button>
+</EditForm>
+</div>
+
+@code {
+    private UserRegistrationModel newUser = new UserRegistrationModel();
+    private string errorMessage;
+
+    private async Task HandleRegister()
+    {
+        errorMessage = string.Empty; // Reset error message
+        string apiBaseUrl = Configuration["APIBaseUrl"];
+        string registerEndpoint = $"{apiBaseUrl}auth/register";
+
+        var response = await Http.PostAsJsonAsync(registerEndpoint, newUser);
+        if (response.IsSuccessStatusCode)
+        {
+            NavigationManager.NavigateTo("/login");
+        }
+        else if (response.StatusCode == System.Net.HttpStatusCode.Conflict)
+        {
+            // Handle conflict
+            errorMessage = "The username or email you entered is already in use. Please try another.";
+        }
+        else
+        {
+            errorMessage = "An error occurred during registration. Please try again later.";
+        }
+    }
+}

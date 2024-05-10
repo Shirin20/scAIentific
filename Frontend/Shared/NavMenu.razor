@@ -1,0 +1,92 @@
+﻿@inject SessionService sessionService
+@inject NavigationManager NavigationManager
+
+<nav class="navbar">
+    <a class="navbar-brand" href="/">scAIentific</a>
+    <div class="" id="navbarText">
+        <ul class="nav nav-pills nav-fill">
+            @if (!isLoggedIn)
+            {
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="register">
+                        <span class="oi oi-plus" aria-hidden="true"></span>Register
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="login">
+                        <span class="oi oi-plus" aria-hidden="true"></span>Login
+                    </NavLink>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item">
+                    <NavLink class="nav-link" @onclick="Logout">
+                        <span class="oi oi-plus" aria-hidden="true"></span>Logout
+                    </NavLink>
+                </li>
+            }
+        </ul>
+    </div>
+</nav>
+
+
+@code {
+  private bool isLoggedIn;
+  private bool collapseNavMenu = true;
+
+  private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+  private void ToggleNavMenu()
+  {
+    collapseNavMenu = !collapseNavMenu;
+  }
+
+  protected override void OnInitialized()
+{
+    sessionService.OnLoginStatusChanged += UpdateLoginState;
+    UpdateLoginState();
+}
+
+private void UpdateLoginState()
+{
+  Console.WriteLine("Updating login state...");
+    isLoggedIn = !string.IsNullOrEmpty(sessionService.GetToken());
+    StateHasChanged();
+}
+
+public void Dispose()
+{
+    sessionService.OnLoginStatusChanged -= UpdateLoginState;
+}
+
+
+protected override async Task OnAfterRenderAsync(bool firstRender)
+{
+    if (firstRender)
+    {
+        isLoggedIn = await IsUserLoggedIn();
+        StateHasChanged();
+    }
+}
+
+
+
+    private async Task<bool> IsUserLoggedIn()
+{
+    var token = sessionService.GetToken();
+
+    bool isLoggedIn = token != null && token.Length > 0;
+    return isLoggedIn;
+}
+
+ private async Task Logout()
+{
+    sessionService.ClearToken();
+    isLoggedIn = false;
+    Console.WriteLine("Logged out, navigating to home.");
+    NavigationManager.NavigateTo("/", forceLoad: true);
+}
+
+
+}

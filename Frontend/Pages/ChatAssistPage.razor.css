@@ -1,0 +1,39 @@
+.chat-history {
+    height: 30%; 
+    width: 100%;
+    overflow-y: auto; /* Enables vertical scrolling */
+    padding: 10px;
+    margin-bottom: 20px; /* Space between chat history and the message input form */
+    border: 1px solid #eee;
+   
+}
+
+.message {
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.message-info {
+    font-size: 0.8em;
+    margin-bottom: 5px;
+}
+
+.message-type {
+    font-weight: bold;
+}
+
+.message-time {
+    margin-left: 10px;
+    font-style: italic;
+}
+
+.user {
+    background-color: #f0f0f0;
+    color: #333; /* Default text color for user messages */
+}
+
+.assistant {
+    background-color: #262626; /* Dark background for assistant messages */
+    color: #FFFFFF; /* White text for assistant messages */
+}

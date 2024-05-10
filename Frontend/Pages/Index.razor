@@ -1,0 +1,86 @@
+﻿@page "/"
+@using Frontend.Services;
+@using Frontend.Shared
+@using System.Net.Http.Headers
+@inject IHttpClientFactory HttpClientFactory
+@inject NavigationManager NavigationManager
+@inject IConfiguration configuration
+@inject SessionService sessionService
+
+
+<PageTitle>Home</PageTitle>
+
+<div class="index-container index">
+    <section class="welcome-banner">
+        <div class="banner-content">
+            <h1>Welcome to scAIentific - Your AI-powered Research Assistant</h1>
+        </div>
+    </section>
+    @if (isLoggedIn) {
+          <button class="index-button" @onclick="CheckAssistantStatus">Start</button>
+    }
+</div>
+
+@code {
+
+    private bool isLoggedIn = false;
+
+     protected override async Task OnInitializedAsync()
+    {
+        isLoggedIn = await IsUserLoggedIn();
+    }
+
+    private async Task<bool> IsUserLoggedIn()
+    {
+
+        var token = sessionService.GetToken();
+        return !string.IsNullOrEmpty(token);
+    }
+
+    private async Task CheckAssistantStatus()
+    {
+        try
+        {
+        var httpClient = HttpClientFactory.CreateClient("AuthorizedClient");
+        var token = sessionService.GetToken();
+
+        if (string.IsNullOrEmpty(token))
+        {
+            throw new InvalidOperationException("No authentication token available.");
+        }
+
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var response = await httpClient.GetAsync($"{configuration.GetValue<string>("APIBaseUrl")}research-front/get-assistant");
+            if (response.IsSuccessStatusCode)
+            {
+                var responseBody = await response.Content.ReadAsStringAsync();
+                if (responseBody != null && responseBody.StartsWith("{\"assistant_id"))
+                {
+                    // Navigate to the Assistant component/page
+                    NavigationManager.NavigateTo("/assistant");
+                }
+                else
+                {
+                    // Navigate to the UploadFile page/component if the assistant is not found
+                    NavigationManager.NavigateTo("/create-assistant");
+                }
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                // Handle 404 specifically if the assistant is not found
+                Console.WriteLine("Assistant not found");
+                NavigationManager.NavigateTo("/create-assistant");
+            }
+            else
+            {
+                // Handle other types of errors
+                Console.WriteLine($"Server returned error: {response.StatusCode}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching assistant status: {ex.Message}");
+        }
+    }
+}

@@ -1,0 +1,32 @@
+@using Frontend.Models
+@using Frontend.Services
+@inject NavigationManager NavigationManager
+@inject SessionService sessionService 
+@page "/create-assistant"
+
+<PageTitle>Create Assistant</PageTitle>
+
+<div>
+
+<AssistantCreationForm />
+
+
+</div>
+
+@code 
+{ 
+  protected override async Task OnInitializedAsync()
+    {
+        if (!await IsUserLoggedIn())
+        {
+            NavigationManager.NavigateTo("/login-required");
+        }
+    }
+
+    private async Task<bool> IsUserLoggedIn()
+    {
+        var token = sessionService.GetToken();
+        return !string.IsNullOrEmpty(token);
+    }
+
+}
