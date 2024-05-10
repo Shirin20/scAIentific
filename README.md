@@ -2,7 +2,7 @@
 
 ## Overview
 
-scAIentific is an application designed scAIentific is an innovative application tailored specifically for researchers and students deeply involved in their specific fields of study. This advanced AI-powered tool specializes in providing expert assistance by analyzing a vast array of scientific articles to identify key trends, themes, and findings that align precisely with the user’s current research focus. scAIentific is designed to streamline the research process, making the exploration of cutting-edge research more efficient and accessible. It saves valuable time and resources, enhancing productivity and insight. This project is the result of a collaborative effort by students as part of a university group initiative, showcasing the practical application of AI in academic research.
+scAIentific is an innovative application tailored specifically for researchers and students deeply involved in their specific fields of study. This advanced AI-powered tool specializes in providing expert assistance by analyzing a vast array of scientific articles to identify key trends, themes, and findings that align precisely with the user’s current research focus. scAIentific is designed to streamline the research process, making the exploration of cutting-edge research more efficient and accessible. It saves valuable time and resources, enhancing productivity and insight. This project is the result of a collaborative effort by students as part of a university group initiative, showcasing the practical application of AI in academic research.
 
 ## Developers
 
