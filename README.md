@@ -79,3 +79,4 @@ dotnet run
 ![Home-page](AppOverview/home-page.png) 
 
 ## License
+MIT
