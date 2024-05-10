@@ -14,8 +14,8 @@ scAIentific's goal is to explore how AI can facilitate and streamline the proces
 
 ### Project Goals
 
-- Develop a prototype/proof-of-concept application capable of compiling up to 250 articles to describe the current research front.
-- Provide a user-friendly frontend for uploading articles and receiving summarized results.
+- Develop an app that gives the user the ability to create an Ai assistant, that is expert in a research area of the user choice, that will help the user to find and describe the current research front.
+- Provide a user-friendly frontend for uploading research articles and receiving the needed results.
 
 ## Features
 
