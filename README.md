@@ -8,9 +8,8 @@ scAIentific is an innovative application tailored specifically for researchers a
 
 This project was developed by a group of students:
 
-- **Shirin Meirkhan**
+- **[Shirin Meirkhan](https://github.com/Shirin20)**
 - **[kalle Andreasson](https://github.com/kalleandreasson)**
-
 
 ### Project Origin
 
@@ -27,9 +26,10 @@ scAIentific's goal is to explore how AI can facilitate and streamline the proces
 
 ## Features
 
-- **Article Upload**: Users can upload files up to 512 MB directly into the AI assistant.
+- **Article Upload**: Users can upload files (.docx) up to 512 MB directly into the AI assistant.
 - **Custom AI-Assistant Creation**: Allows users to create a personalized AI assistant. This specialized assistant is proficient in a research field specified by the user.
 - **Research Discussion with the AI-Assistant**: Offers the capability to converse with the assistant and discuss the file's content, assisting in the identification of the research front.
+- **The AI-Assistant chat history**: The user will get the chat history sent to their mail.
 
 ## Technical Stack
 
@@ -44,6 +44,8 @@ scAIentific's goal is to explore how AI can facilitate and streamline the proces
 - .NET core 8.
 - An IDE such as Visual Studio or Visual Studio Code
 - Access to the provided AI model or equivalent
+- Create a mail for the application to enable that chat history sending feature.
+- Set mongoBD Atlas database connectionstring.
 
 ### Setup
 
